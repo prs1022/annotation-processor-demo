@@ -27,6 +27,7 @@ public class VisitTreeProcessor extends AbstractProcessor {
         this.scanner = new MyScanner();
     }
 
+    @Override
     public boolean process(Set<? extends TypeElement> types, RoundEnvironment environment) {
         if (!environment.processingOver()) {
             for (Element element : environment.getRootElements()) {
@@ -39,16 +40,19 @@ public class VisitTreeProcessor extends AbstractProcessor {
 
     public class MyScanner extends TreePathScanner<Tree, Void> {
 
+        @Override
         public Tree visitClass(ClassTree node, Void p) {
             System.out.println("类 " + node.getKind() + ": " + node.getSimpleName());
             return super.visitClass(node, p);
         }
 
+        @Override
         public Tree visitMethod(MethodTree node, Void p) {
             System.out.println("方法 " + node.getKind() + ": " + node.getName());
             return super.visitMethod(node, p);
         }
 
+        @Override
         public Tree visitVariable(VariableTree node, Void p) {
             if (this.getCurrentPath().getParentPath().getLeaf() instanceof ClassTree) {
                 System.out.println("字段 " + node.getKind() + ": " + node.getName());

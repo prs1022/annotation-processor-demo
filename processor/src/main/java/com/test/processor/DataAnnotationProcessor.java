@@ -18,11 +18,13 @@ import javax.lang.model.element.TypeElement;
 import java.util.Set;
 
 /**
+ * 实现自己的注解执行器，用于编译的时候注入字节码
+ * 本例子是实现类似lombok的data注解功能
  * @author yulewei on 17/4/18.
  */
 @AutoService(Processor.class)
-@SupportedAnnotationTypes("*")
-@SupportedSourceVersion(SourceVersion.RELEASE_8)
+@SupportedAnnotationTypes("*") //指定是遇到 Data注解才能执行
+@SupportedSourceVersion(SourceVersion.RELEASE_8) //指定最低支持的jdk版本
 public class DataAnnotationProcessor extends AbstractProcessor {
     private JavacProcessingEnvironment env;
     private Trees trees;
@@ -38,16 +40,27 @@ public class DataAnnotationProcessor extends AbstractProcessor {
         this.names = Names.instance(env.getContext());
     }
 
+    /**
+     * 编译期每遇到一次注解都会执行一次process方法
+     *
+     * @param annotations
+     * @param roundEnv
+     * @return
+     */
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
         if (roundEnv.processingOver()) {
+            System.out.println("已经处理过");
             return true;
         }
 
         for (Element element : roundEnv.getElementsAnnotatedWith(Data.class)) {
-            if (!(element instanceof TypeElement)) continue;
+            if (!(element instanceof TypeElement)){
+                continue;
+            }
 
             TypeElement classElement = (TypeElement) element;
+            // Gets the ClassTree node for a given TypeElement. Returns null if the node can not be found.
             JCTree.JCClassDecl classDecl = (JCTree.JCClassDecl) trees.getTree(classElement);
 
             List<JCTree> methodDecls = List.nil();

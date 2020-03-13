@@ -20,11 +20,11 @@ public class ProcessorMain {
 
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
 
-        File file = new File("example/src/main/java/com/test/javac/Person.java");
+        File file = new File("example/src/main/java/com/test/proc/data/Person.java");
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(Arrays.asList(file));
 
         JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics,
-                Arrays.asList("-verbose", "-d", "example/target/classes"), null, compilationUnits);
+                Arrays.asList("-verbose", "-d", "example/target/extra/classes"), null, compilationUnits);
         task.setProcessors(Arrays.asList(processor));
         task.call();
 

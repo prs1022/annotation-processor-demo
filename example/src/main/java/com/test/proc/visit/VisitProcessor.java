@@ -18,6 +18,7 @@ public class VisitProcessor extends AbstractProcessor {
         this.scanner = new MyScanner();
     }
 
+    @Override
     public boolean process(Set<? extends TypeElement> types, RoundEnvironment environment) {
         if (!environment.processingOver()) {
             for (Element element : environment.getRootElements()) {
@@ -29,16 +30,19 @@ public class VisitProcessor extends AbstractProcessor {
 
     public class MyScanner extends ElementScanner7<Void, Void> {
 
+        @Override
         public Void visitType(TypeElement element, Void p) {
             System.out.println("类 " + element.getKind() + ": " + element.getSimpleName());
             return super.visitType(element, p);
         }
 
+        @Override
         public Void visitExecutable(ExecutableElement element, Void p) {
             System.out.println("方法 " + element.getKind() + ": " + element.getSimpleName());
             return super.visitExecutable(element, p);
         }
 
+        @Override
         public Void visitVariable(VariableElement element, Void p) {
             if (element.getEnclosingElement().getKind() == ElementKind.CLASS) {
                 System.out.println("字段 " + element.getKind() + ": " + element.getSimpleName());

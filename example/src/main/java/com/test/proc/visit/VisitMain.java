@@ -15,7 +15,7 @@ public class VisitMain {
         VisitTreeProcessor processor = new VisitTreeProcessor();
 
         StandardJavaFileManager manager = compiler.getStandardFileManager(diagnostics, null, null);
-        File file = new File("example/src/main/java/com/test/proc/visit/VisitTreeProcessor.java");
+        File file = new File("example/src/main/java/com/test/proc/visit/VisitProcessor.java");
         Iterable<? extends JavaFileObject> sources = manager.getJavaFileObjectsFromFiles(Arrays.asList(file));
 
         CompilationTask task = compiler.getTask(null, manager, diagnostics, Arrays.asList("-d", "example/target/classes"), null, sources);

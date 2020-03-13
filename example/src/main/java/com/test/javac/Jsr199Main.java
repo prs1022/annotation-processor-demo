@@ -16,10 +16,10 @@ public class Jsr199Main {
 
         StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, null, null);
 
-        File file = new File(Jsr199Main.class.getResource("/Hello.java").toURI());
+        File file = new File(Jsr199Main.class.getResource("/Hello2.java").toURI());
         Iterable<? extends JavaFileObject> compilationUnits = fileManager.getJavaFileObjectsFromFiles(Arrays.asList(file));
 
-        compiler.getTask(null, fileManager, diagnostics, Arrays.asList("-d", "example/target/classes"), null, compilationUnits).call();
+        compiler.getTask(null, fileManager, diagnostics, Arrays.asList("-d", "example/target/extra/classes"), null, compilationUnits).call();
 
         for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
             System.out.format("Error on line %d in %s\n%s\n",
