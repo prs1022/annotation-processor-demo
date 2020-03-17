@@ -23,8 +23,10 @@ import java.util.Set;
  * @author yulewei on 17/4/18.
  */
 @AutoService(Processor.class)
-@SupportedAnnotationTypes("*") //指定是遇到 Data注解才能执行
-@SupportedSourceVersion(SourceVersion.RELEASE_8) //指定最低支持的jdk版本
+//指定是遇到 Data注解才能执行
+@SupportedAnnotationTypes("*")
+//指定最低支持的jdk版本
+@SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class DataAnnotationProcessor extends AbstractProcessor {
     private JavacProcessingEnvironment env;
     private Trees trees;
